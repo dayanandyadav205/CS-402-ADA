@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-#define INF 999999  // Represents infinity for missing edges
-#define MAX 100     // Maximum number of vertices
+#define INF 999999.0f // Represents infinity for missing edges
+#define MAX 100        // Maximum number of vertices
 
 float prim(float cost[MAX][MAX], int n, int t[MAX][2]) {
     float mincost = 0;
@@ -9,7 +9,7 @@ float prim(float cost[MAX][MAX], int n, int t[MAX][2]) {
     int k = 1, l = 1;
     float min_edge_cost = INF;
 
-    // 1. Find the absolute minimum cost edge (Scan upper triangle only to avoid duplication)
+    // 1. Find the absolute minimum cost edge (Scan upper triangle only)
     for (int i = 1; i <= n; i++) {
         for (int j = i + 1; j <= n; j++) { 
             if (cost[i][j] < min_edge_cost) {
@@ -70,22 +70,21 @@ float prim(float cost[MAX][MAX], int n, int t[MAX][2]) {
 }
 
 int main() {
-    int n = 4; // Total vertices
+    // FIX 1: Set n to 4 because there are only 4 active vertices (Indices 1 to 4)
+    int n = 4; 
     int t[MAX][2]; 
 
-    // Adjacency matrix using 1-based indexing layout
+    // FIX 2: Ensured the matrix dimensions match the layout size
     float cost[MAX][MAX] = {
-        {0, 2, 0, 1, 4, 0, 0}, 
-        {2, 0, 5, 0, 0, 0, 0}, 
-        {0, 5, 0, 2, 0, 4, 0}, 
-        {1, 0, 2, 0, 0, 0, 0}, 
-		{4, 0, 0, 0, 0, 3, 6},
-		{0, 0, 4, 0, 3, 0, 2},
-		{0, 0, 0, 0, 6, 2, 0}  
+        {INF, INF, INF, INF, INF},     // Row 0 (Ignored padding)
+        {INF, INF, 10.0f, 6.0f, 5.0f},  // Row 1 (Vertex 1 connections)
+        {INF, 10.0f, INF, INF, 15.0f},  // Row 2 (Vertex 2 connections)
+        {INF, 6.0f, INF, INF, 4.0f},   // Row 3 (Vertex 3 connections)
+        {INF, 5.0f, 15.0f, 4.0f, INF}   // Row 4 (Vertex 4 connections)
     };
 
     float total_cost = prim(cost, n, t);
-    printf("Exp 09 Prims's Algorithm'\n");
+    printf("Exp 09 Prim's Algorithm\n");
     printf("Edges in the Minimum Spanning Tree:\n");
     for (int i = 1; i <= n - 1; i++) {
         printf("Edge %d: (%d, %d)\n", i, t[i][0], t[i][1]);

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #define MAX_VERTICES 100
-#define MAX_EDGES 1000
+#define MAX_EDGES 100
 
 // Structure to represent an edge
 typedef struct {
@@ -84,7 +84,7 @@ Edge deleteMin() {
 }
 
 // Kruskal's Algorithm
-double Kruskal(Edge E[], int numEdges, int n, int t[][3]) {
+int Kruskal(Edge E[], int numEdges, int n, int t[][3]) {
     // 1. Construct a heap out of the edge costs using heapify
     heapify(E, numEdges);
     
@@ -94,8 +94,7 @@ double Kruskal(Edge E[], int numEdges, int n, int t[][3]) {
     }
     
     int i = 0;
-    double mincost = 0.0;
-    
+    int mincost = 0;
     // 3. Main loop
     while ((i < n - 1) && (heapSize > 0)) {
         // Delete a minimum cost edge (u, v) from the heap and re-heapify using Adjust
@@ -119,7 +118,7 @@ double Kruskal(Edge E[], int numEdges, int n, int t[][3]) {
     // 4. Check if a valid spanning tree was found
     if (i < n - 1) {
         printf("no spanning tree\n");
-        return -1.0;
+        return -1;
     } else {
         return mincost;
     }
@@ -144,14 +143,12 @@ int main() {
     
     double result = Kruskal(E, numEdges, n, t);
     printf("Exp 08 Kruskal's Algorithm'\n");
-    if (result != -1.0) {
+    if (result != -1) {
         printf("Minimum Cost Spanning Tree Edges:\n");
         for (int i = 1; i <= n - 1; i++) {
             printf("Edge %d: (%d, %d)\n", i, t[i][1], t[i][2]);
         }
-        printf("Total Minimum Cost: %.2f\n", result);
+        printf("Total Minimum Cost: %.0f\n", result);
     }
-    
     return 0;
 }
- 
