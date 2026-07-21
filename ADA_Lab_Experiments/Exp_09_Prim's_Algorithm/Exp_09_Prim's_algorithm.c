@@ -1,3 +1,4 @@
+//Exp 09 Prim's Algorithm
 #include <stdio.h>
 
 #define INF 999999.0f // Represents infinity for missing edges
